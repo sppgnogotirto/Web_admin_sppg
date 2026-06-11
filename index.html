@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard Admin — SPPG</title>
+
+  <meta
+    name="description"
+    content="Dashboard monitoring laporan operasional harian SPPG untuk 6 divisi dan 9 sub-kategori."
+  >
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%A5%97%3C/text%3E%3C/svg%3E"
+  >
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  >
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+
+  <!-- App JS -->
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+
+  <div class="app-layout">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="app-sidebar" id="sidebar" aria-label="Sidebar navigasi">
+      <div class="sidebar-header">
+        <div class="brand-logo">
+          <i class="fa-solid fa-apple-whole brand-icon"></i>
+
+          <div class="brand-details">
+            <span class="brand-name">SPPG Admin</span>
+            <span class="brand-subtitle">Pelayanan Pemenuhan Gizi</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="mobile-close-btn"
+          id="mobileCloseBtn"
+          aria-label="Tutup menu"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-menu" aria-label="Menu utama">
+        <div class="menu-label">Menu Utama</div>
+
+        <a
+          href="#"
+          class="menu-item active"
+          data-target="overview"
+          id="menu-overview"
+        >
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Ikhtisar</span>
+        </a>
+
+        <div class="menu-label">Divisi Operasional</div>
+
+        <!-- Persiapan -->
+        <div class="menu-group" id="group-persiapan">
+          <button
+            type="button"
+            class="menu-group-toggle"
+            aria-expanded="false"
+          >
+            <span class="menu-group-left">
+              <i class="fa-solid fa-carrot"></i>
+              <span>1. Persiapan</span>
+            </span>
+            <i class="fa-solid fa-chevron-down menu-chevron"></i>
+          </button>
+
+          <div class="menu-sub">
+            <a href="#" class="menu-item sub" data-target="persiapan_bahan">
+              <i class="fa-solid fa-clipboard-check"></i>
+              <span>Pemeriksaan Bahan</span>
+            </a>
+
+            <a href="#" class="menu-item sub" data-target="persiapan_limbah">
+              <i class="fa-solid fa-recycle"></i>
+              <span>Limbah Persiapan</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Pengolahan -->
+        <div class="menu-group" id="group-pengolahan">
+          <button
+            type="button"
+            class="menu-group-toggle"
+            aria-expanded="false"
+          >
+            <span class="menu-group-left">
+              <i class="fa-solid fa-fire-burner"></i>
+              <span>2. Pengolahan</span>
+            </span>
+            <i class="fa-solid fa-chevron-down menu-chevron"></i>
+          </button>
+
+          <div class="menu-sub">
+            <a href="#" class="menu-item sub" data-target="pengolahan_suhu">
+              <i class="fa-solid fa-temperature-half"></i>
+              <span>Suhu Produk</span>
+            </a>
+
+            <a href="#" class="menu-item sub" data-target="pengolahan_produksi">
+              <i class="fa-solid fa-industry"></i>
+              <span>Monitoring Produksi</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Pemorsian -->
+        <div class="menu-group" id="group-pemorsian">
+          <button
+            type="button"
+            class="menu-group-toggle"
+            aria-expanded="false"
+          >
+            <span class="menu-group-left">
+              <i class="fa-solid fa-kitchen-set"></i>
+              <span>3. Pemorsian</span>
+            </span>
+            <i class="fa-solid fa-chevron-down menu-chevron"></i>
+          </button>
+
+          <div class="menu-sub">
+            <a href="#" class="menu-item sub" data-target="pemorsian_ompreng">
+              <i class="fa-solid fa-boxes-stacked"></i>
+              <span>Ompreng</span>
+            </a>
+
+            <a href="#" class="menu-item sub" data-target="pemorsian_sisa">
+              <i class="fa-solid fa-scale-unbalanced-flip"></i>
+              <span>Sisa Makanan</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Distribusi -->
+        <a
+          href="#"
+          class="menu-item"
+          data-target="distribusi"
+          id="menu-distribusi"
+        >
+          <i class="fa-solid fa-truck-ramp-box"></i>
+          <span>4. Distribusi</span>
+        </a>
+
+        <!-- Pencucian -->
+        <a
+          href="#"
+          class="menu-item"
+          data-target="pencucian_limbah"
+          id="menu-pencucian"
+        >
+          <i class="fa-solid fa-soap"></i>
+          <span>5. Pencucian (Limbah)</span>
+        </a>
+
+        <!-- Kebersihan -->
+        <a
+          href="#"
+          class="menu-item"
+          data-target="kebersihan_limbah"
+          id="menu-kebersihan"
+        >
+          <i class="fa-solid fa-broom"></i>
+          <span>6. Kebersihan (Limbah)</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="settings-btn" id="openSettingsBtn">
+          <i class="fa-solid fa-gear"></i>
+          <span>Pengaturan API</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ===================== MAIN ===================== -->
+    <main class="app-main">
+
+      <!-- Top bar -->
+      <header class="app-topbar">
+        <div class="topbar-left">
+          <button
+            type="button"
+            class="mobile-menu-toggle"
+            id="mobileMenuToggleBtn"
+            aria-label="Buka menu"
+          >
+            <i class="fa-solid fa-bars"></i>
+          </button>
+
+          <div class="page-title-area">
+            <h1 class="page-title" id="mainPageTitle">Ikhtisar Dashboard</h1>
+            <p class="page-description" id="mainPageDesc">
+              Monitoring seluruh laporan operasional SPPG hari ini.
+            </p>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="date-picker-wrap">
+            <i class="fa-regular fa-calendar-days"></i>
+            <input
+              type="date"
+              id="datePicker"
+              title="Pilih tanggal laporan"
+              aria-label="Pilih tanggal laporan"
+            >
+          </div>
+
+          <div class="live-clock" id="liveClock">
+            <i class="fa-regular fa-clock"></i>
+            <span id="clockText">--:--</span>
+          </div>
+
+          <div class="api-status-badge offline" id="apiStatusBadge">
+            <span class="status-dot"></span>
+            <span id="apiStatusText">Data Simulasi</span>
+          </div>
+
+          <button
+            type="button"
+            class="btn-icon"
+            id="refreshDataBtn"
+            title="Perbarui Data"
+            aria-label="Perbarui Data"
+          >
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </button>
+
+          <button
+            type="button"
+            class="btn-icon"
+            id="themeToggleBtn"
+            title="Ubah Tema"
+            aria-label="Ubah Tema"
+          >
+            <i class="fa-solid fa-moon moon-icon"></i>
+            <i class="fa-solid fa-sun sun-icon"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="content-scrollable">
+
+        <!-- Alert Banner -->
+        <div class="alert-banner" id="demoAlertBanner">
+          <div class="alert-icon">
+            <i class="fa-solid fa-circle-info"></i>
+          </div>
+
+          <div class="alert-message">
+            <strong>Data Simulasi.</strong>
+            Hubungkan ke Google Sheets melalui
+            <strong>Pengaturan API</strong> di sidebar.
+          </div>
+
+          <button
+            type="button"
+            class="alert-close"
+            id="closeAlertBannerBtn"
+            aria-label="Tutup pemberitahuan"
+          >
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <!-- KPI -->
+        <section class="metric-grid" id="kpiGrid" aria-label="Ringkasan KPI"></section>
+
+        <!-- Chart + Info -->
+        <section class="analytics-section">
+          <div class="card chart-card">
+            <div class="card-header">
+              <h2 class="card-title" id="chartCardTitle">Distribusi Data</h2>
+              <span class="chart-type-indicator" id="chartTypeIndicator">
+                Grafik Batang
+              </span>
+            </div>
+
+            <div class="card-body chart-container-wrapper">
+              <canvas id="mainChart"></canvas>
+            </div>
+          </div>
+
+          <div class="card info-card">
+            <div class="card-header">
+              <h2 class="card-title" id="infoCardTitle">Ringkasan</h2>
+            </div>
+
+            <div class="card-body">
+              <div class="stats-summary-list" id="statsSummaryList"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Table -->
+        <section class="table-section-card card">
+          <div class="table-control-header">
+            <h2 class="card-title" id="tableCardTitle">Detail Data</h2>
+
+            <div class="table-actions">
+              <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input
+                  type="text"
+                  id="tableSearchInput"
+                  placeholder="Cari data..."
+                  aria-label="Cari data"
+                >
+              </div>
+
+              <button
+                type="button"
+                class="btn-action btn-secondary"
+                id="exportCsvBtn"
+                title="Ekspor CSV"
+              >
+                <i class="fa-solid fa-file-csv"></i>
+                <span>CSV</span>
+              </button>
+
+              <button
+                type="button"
+                class="btn-action btn-secondary"
+                id="printReportBtn"
+                title="Cetak"
+              >
+                <i class="fa-solid fa-print"></i>
+                <span>Cetak</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive-container">
+            <table class="data-table" id="mainDataTable">
+              <thead>
+                <tr id="tableHeaderRow"></tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <span id="tableShowingText">Menampilkan -- data</span>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================== SETTINGS MODAL ===================== -->
+  <div class="modal-backdrop" id="settingsModal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+      <div class="modal-header">
+        <h3 class="modal-title" id="settingsModalTitle">
+          <i class="fa-solid fa-gear"></i>
+          Pengaturan API
+        </h3>
+
+        <button
+          type="button"
+          class="modal-close-btn"
+          id="closeSettingsBtn"
+          aria-label="Tutup pengaturan"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          Hubungkan dashboard dengan Google Sheets melalui Google Apps Script.
+        </p>
+
+        <div class="form-group">
+          <label for="apiUrlInput">URL Web App Google Apps Script</label>
+
+          <input
+            type="url"
+            id="apiUrlInput"
+            placeholder="https://script.google.com/macros/s/.../exec"
+            autocomplete="off"
+            spellcheck="false"
+          >
+
+          <span class="help-text">
+            Deploy Apps Script sebagai Web App, pilih akses "Anyone".
+          </span>
+        </div>
+
+        <div class="test-connection-area">
+          <button type="button" class="btn-action btn-primary" id="testApiBtn">
+            Test Koneksi
+          </button>
+
+          <div class="test-result" id="testApiResult"></div>
+        </div>
+
+        <div class="instructions-accordion">
+          <button
+            type="button"
+            class="accordion-header"
+            id="instructionsToggle"
+            aria-expanded="false"
+          >
+            <span>Petunjuk Setup</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+
+          <div class="accordion-content" id="instructionsContent">
+            <ol>
+              <li>
+                Sheet dibuat otomatis oleh aplikasi Android dengan format:
+                <code>PERSIAPAN_yyyy-MM-dd</code>,
+                <code>PERSIAPAN_LIMBAH_yyyy-MM-dd</code>,
+                <code>PENGOLAHAN_yyyy-MM-dd</code>,
+                <code>PENGOLAHAN_PRODUKSI_yyyy-MM-dd</code>,
+                <code>PEMORSIAN_OMPRENG_yyyy-MM-dd</code>,
+                <code>PEMORSIAN_SISA_yyyy-MM-dd</code>,
+                <code>DISTRIBUSI_yyyy-MM-dd</code>,
+                <code>PENCUCIAN_LIMBAH_yyyy-MM-dd</code>,
+                dan <code>KEBERSIHAN_LIMBAH_yyyy-MM-dd</code>.
+              </li>
+              <li>Buka <strong>Extensions &gt; Apps Script</strong>.</li>
+              <li>Salin kode API website ke editor Apps Script.</li>
+              <li>
+                Klik <strong>Deploy &gt; New deployment</strong>,
+                lalu pilih <strong>Web App</strong>.
+              </li>
+              <li>
+                Atur <strong>Execute as: Me</strong> dan
+                <strong>Who has access: Anyone</strong>.
+              </li>
+              <li>Salin URL Web App dan tempel di kolom di atas.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-action btn-secondary" id="cancelSettingsBtn">
+          Batal
+        </button>
+
+        <button type="button" class="btn-action btn-success" id="saveSettingsBtn">
+          Simpan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== IMAGE MODAL ===================== -->
+  <div class="modal-backdrop" id="imageModal" aria-hidden="true">
+    <div class="modal-dialog image-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
+      <div class="modal-header">
+        <h3 class="modal-title" id="imageModalTitle">
+          <i class="fa-solid fa-image"></i>
+          Pratinjau Foto
+        </h3>
+
+        <button
+          type="button"
+          class="modal-close-btn"
+          id="closeImageModalBtn"
+          aria-label="Tutup pratinjau foto"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body image-modal-body">
+        <div class="image-loader" id="imageLoader">
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          Memuat gambar...
+        </div>
+
+        <img
+          id="previewImage"
+          src=""
+          alt="Pratinjau Foto"
+          loading="lazy"
+        >
+
+        <iframe
+          id="previewIframe"
+          src=""
+          title="Pratinjau Google Drive"
+          loading="lazy"
+        ></iframe>
+      </div>
+
+      <div class="modal-footer">
+        <a
+          id="originalImageLink"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-action btn-primary"
+          title="Buka gambar di tab baru"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          Tab Baru
+        </a>
+
+        <button type="button" class="btn-action btn-secondary" id="closeImageModalBtn2">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
