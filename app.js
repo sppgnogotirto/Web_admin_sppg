@@ -51,6 +51,7 @@ const DOM = {
 
   settingsModal: document.getElementById('settingsModal'),
   openSettingsBtn: document.getElementById('openSettingsBtn'),
+  mobileSettingsBtn: document.getElementById('mobileSettingsBtn'),
   closeSettingsBtn: document.getElementById('closeSettingsBtn'),
   cancelSettingsBtn: document.getElementById('cancelSettingsBtn'),
   saveSettingsBtn: document.getElementById('saveSettingsBtn'),
@@ -345,15 +346,26 @@ function initDataControls() {
 // ==========================================================================
 // MODAL
 // ==========================================================================
+function openSettingsModal() {
+  if (DOM.apiUrlInput) {
+    DOM.apiUrlInput.value = appState.apiUrl;
+  }
+
+  if (DOM.testApiResult) {
+    DOM.testApiResult.textContent = '';
+    DOM.testApiResult.className = 'test-result';
+  }
+
+  openModal(DOM.settingsModal);
+}
+
 function initModal() {
   if (DOM.openSettingsBtn) {
-    DOM.openSettingsBtn.addEventListener('click', () => {
-      DOM.apiUrlInput.value = appState.apiUrl;
-      DOM.testApiResult.textContent = '';
-      DOM.testApiResult.className = 'test-result';
+    DOM.openSettingsBtn.addEventListener('click', openSettingsModal);
+  }
 
-      openModal(DOM.settingsModal);
-    });
+  if (DOM.mobileSettingsBtn) {
+    DOM.mobileSettingsBtn.addEventListener('click', openSettingsModal);
   }
 
   if (DOM.closeSettingsBtn) {
