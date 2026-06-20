@@ -47,11 +47,17 @@
       <aside class="app-sidebar" id="sidebar" aria-label="Sidebar navigasi">
         <div class="sidebar-header">
           <div class="brand-logo">
-            <i class="fa-solid fa-apple-whole brand-icon"></i>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/9/96/Logo_Badan_Gizi_Nasional_%282024%29.png"
+              alt="Logo SPPG"
+              class="brand-image"
+              loading="eager"
+              referrerpolicy="no-referrer"
+            />
 
             <div class="brand-details">
-              <span class="brand-name">SPPG Admin</span>
-              <span class="brand-subtitle">Pelayanan Pemenuhan Gizi</span>
+              <span class="brand-name">SPPG</span>
+              <span class="brand-subtitle">Satuan Pelayanan Pemenuhan Gizi</span>
             </div>
           </div>
 
@@ -77,11 +83,37 @@
             id="menu-overview"
           >
             <i class="fa-solid fa-chart-pie"></i>
-            <span>Ikhtisar</span>
+            <span>Dashboard</span>
           </a>
+          <div class="menu-label">Asisten Lapangan</div>
 
+          <div class="menu-group" id="group-aslap">
+            <button
+              type="button"
+              class="menu-group-toggle"
+              aria-expanded="false"
+            >
+              <span class="menu-group-left">
+                <i class="fa-solid fa-user-tie"></i>
+                <span>Asisten Lapangan</span>
+              </span>
+
+              <i class="fa-solid fa-chevron-down menu-chevron"></i>
+            </button>
+
+            <div class="menu-sub">
+              <a href="#" class="menu-item sub" data-target="aslap_distribusi">
+                <i class="fa-solid fa-route"></i>
+                <span>Rekap Distribusi</span>
+              </a>
+
+              <a href="#" class="menu-item sub" data-target="aslap_planning">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Planning Penerima</span>
+              </a>
+            </div>
+          </div>
           <div class="menu-label">Divisi Operasional</div>
-
           <!-- Persiapan -->
           <div class="menu-group" id="group-persiapan">
             <button
@@ -226,7 +258,7 @@
             </button>
 
             <div class="page-title-area">
-              <h1 class="page-title" id="mainPageTitle">Ikhtisar Dashboard</h1>
+              <h1 class="page-title" id="mainPageTitle">Dashboard</h1>
               <p class="page-description" id="mainPageDesc">
                 Monitoring seluruh laporan operasional SPPG hari ini.
               </p>

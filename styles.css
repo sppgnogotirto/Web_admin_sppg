@@ -106,6 +106,13 @@ body {
   border-radius: var(--radius-md);
   transition: transform var(--transition-normal);
 }
+.brand-image {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
 .brand-logo:hover .brand-icon { transform: rotate(-10deg) scale(1.05); }
 .brand-details { display: flex; flex-direction: column; }
 .brand-name { font-family: var(--font-heading); font-weight: 800; font-size: 17px; letter-spacing: -0.5px; }
